@@ -6,6 +6,7 @@
 #include "avio_reading.h"
 #include "demuxer.h"
 #include "remuxer.h"
+#include "encode_video.h"
 
 #define UTIL_TEST 0
 #define CUSTOM_LOG 0 // 自定义日志
@@ -51,7 +52,10 @@ int main(int argc, char *argv[])
 //    demuxer.open_demuxer_read_frame(url);
 
     Remuxer remuxer;
-    remuxer.start_remuxer(url.c_str(), out_filename.c_str());
+//    remuxer.start_remuxer(url.c_str(), out_filename.c_str());
+
+    EncodeVideo encode_video;
+    encode_video.start_encode("encode_test.mp4", "mpeg1video");
 
     return 0;
 }

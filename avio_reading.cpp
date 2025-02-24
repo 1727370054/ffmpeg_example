@@ -9,6 +9,7 @@ bool AVIOReading::open(const string &url)
     uint8_t  *avio_ctx_buffer = nullptr;
     size_t avio_ctx_buffer_size = 32768;
 
+    // 创建文件内存映射
     if (av_file_map(url.c_str(), &_buffer_data.ptr, &_buffer_data.size, 0 , nullptr) < -1)
     {
         LOG_ERROR << "av_file_map error";
