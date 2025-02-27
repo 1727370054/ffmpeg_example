@@ -34,7 +34,9 @@ add_executable(${ITEM_NAME} main.cpp
         remuxer.cpp
         remuxer.h
         encode_video.cpp
-        encode_video.h)
+        encode_video.h
+        demuxing_decoding.cpp
+        demuxing_decoding.h)
 
 # 添加编译选项
 if(MINGW)

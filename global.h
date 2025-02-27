@@ -28,6 +28,7 @@ extern "C"
 #include "libavutil/samplefmt.h"
 #include "libavutil/timestamp.h"
 #include "libavutil/mathematics.h"
+#include "libavutil/imgutils.h"
 };
 #else
 #ifdef ___cplusplus
@@ -52,6 +53,39 @@ extern "C"
 
 #include "av_logger.h"
 
+///< 用于RAII(资源获取即初始化)模式的智能指针自定义删除器
+struct AVFormatContextDeleter
+{
+    void operator()(AVFormatContext* ctx)
+    {
+        if (ctx) avformat_close_input(&ctx);
+    }
+};
+
+struct AVCodecContextDeleter
+{
+    void operator()(AVCodecContext* ctx)
+    {
+        if (ctx) avcodec_free_context(&ctx);
+    }
+};
+
+struct AVPacketDeleter
+{
+    void operator()(AVPacket* packet)
+    {
+        if (packet) av_packet_free(&packet);
+    }
+};
+
+struct AVFrameDeleter
+{
+    void operator()(AVFrame* frame)
+    {
+        if (frame) av_frame_free(&frame);
+    }
+};
+
 class Tools
 {
 public:
@@ -69,6 +103,14 @@ public:
         << " duration:" <<  av_ts2str(pkt->duration) << " duration_time:" << av_ts2timestr(pkt->duration, time_base)
         << " stream_index:" << pkt->stream_index;
     }
+
+     // 用于存储错误信息的辅助方法
+     static std::string avErrorToString(int errnum)
+     {
+         char errbuf[AV_ERROR_MAX_STRING_SIZE];
+         av_strerror(errnum, errbuf, AV_ERROR_MAX_STRING_SIZE);
+         return std::string(errbuf);
+     }
 };
 
 #endif //ALL_EXAMPLE_GLOBAL_H

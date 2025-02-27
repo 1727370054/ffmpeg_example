@@ -7,6 +7,7 @@
 #include "demuxer.h"
 #include "remuxer.h"
 #include "encode_video.h"
+#include "demuxing_decoding.h"
 
 #define UTIL_TEST 0
 #define CUSTOM_LOG 0 // 自定义日志
@@ -55,7 +56,10 @@ int main(int argc, char *argv[])
 //    remuxer.start_remuxer(url.c_str(), out_filename.c_str());
 
     EncodeVideo encode_video;
-    encode_video.start_encode("encode_test.mp4", "mpeg1video");
+//    encode_video.start_encode("encode_test.mp4", "mpeg1video");
+
+    MediaDecoder media_decoder("22-28.mp4", "22-28.yuv", "22-28.pcm");
+    media_decoder.decode();
 
     return 0;
 }
