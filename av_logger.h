@@ -1,6 +1,10 @@
-//
-// Created by HWK15 on 2025/2/22.
-//
+/********************************************************************************
+* @author: hwk
+* @email: orionlink@163.com
+* @date: 2025/3/1 15:37
+* @version: 1.0
+* @description: ffmpeg自定义日志
+********************************************************************************/
 
 #ifndef ALL_EXAMPLE_AV_LOGGER_H
 #define ALL_EXAMPLE_AV_LOGGER_H

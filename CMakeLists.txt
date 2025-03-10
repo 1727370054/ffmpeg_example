@@ -36,7 +36,12 @@ add_executable(${ITEM_NAME} main.cpp
         encode_video.cpp
         encode_video.h
         demuxing_decoding.cpp
-        demuxing_decoding.h)
+        demuxing_decoding.h
+        filtering_video.cpp
+        filtering_video.h
+        live_test.cpp
+        live_test.h
+)
 
 # 添加编译选项
 if(MINGW)

@@ -29,6 +29,10 @@ extern "C"
 #include "libavutil/timestamp.h"
 #include "libavutil/mathematics.h"
 #include "libavutil/imgutils.h"
+#include "libavfilter/buffersrc.h"
+#include "libavfilter/buffersink.h"
+#include "libavfilter/avfilter.h"
+#include "libavutil/time.h"
 };
 #else
 #ifdef ___cplusplus
@@ -84,6 +88,31 @@ struct AVFrameDeleter
     {
         if (frame) av_frame_free(&frame);
     }
+};
+
+struct AVFilterGraphDeleter
+{
+    void operator()(AVFilterGraph* graph)
+    {
+        if (graph) avfilter_graph_free(&graph);
+    }
+};
+
+class Defer
+{
+public:
+    using defer_func_t = std::function<void()>;
+
+    Defer(defer_func_t defer_func) : _defer_func(defer_func) {}
+    ~Defer()
+    {
+        if (_defer_func)
+        {
+            _defer_func();
+        }
+    }
+private:
+    defer_func_t _defer_func;
 };
 
 class Tools
